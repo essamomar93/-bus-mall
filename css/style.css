@@ -1,0 +1,17 @@
+p{
+    text-align: center;
+    font-weight: bold;
+    font-size:x-large;
+}
+img{
+    width: 300px;
+    height: 200px;
+    padding: 50px;
+    background-color: antiquewhite;
+}
+ul{
+    color: blue;
+    padding: 10px;
+    text-align: center;
+    
+}
