@@ -6,11 +6,11 @@ let secoundImageElement = document.getElementById('secound-img');
 
 let therdImageElement = document.getElementById('therd-img');
 
-// let shownImageElement=document.getElementById('images')
+let imgdiv = document.getElementById('images');
 
-// console.log(shownImageElement,therdImageElement);
+let btn = document.createElement("button");
 
-let maxVote = 25;
+let maxVote = 10;
 let userVoteCounter = 0;
 
 let firstImageIndex;
@@ -22,11 +22,11 @@ function Prodect(name, src) {
     this.src = src;
     this.votes = 0;
     this.shown = 0;
-    prodects.push(this);
+    Prodect.prodects.push(this);
 
 };
 
-let prodects = [];
+Prodect.prodects = [];
 
 new Prodect('bag', 'img/bag.jpg');
 new Prodect('banana', 'img/banana.jpg');
@@ -48,18 +48,16 @@ new Prodect('unicorn', 'img/unicorn.jpg');
 new Prodect('water-can', 'img/water-can.jpg');
 new Prodect('wine-glass', 'img/wine-glass.jpg');
 
-console.log(prodects);
+console.log(Prodect.prodects);
 
 function getRandomeIndex() {
-    return Math.floor(Math.random() * prodects.length)
+    return Math.floor(Math.random() * Prodect.prodects.length)
 };
 
-//   console.log(getRandomeIndex());
 function renderTheImg() {
     firstImageIndex = getRandomeIndex();
     secoundImageIndex = getRandomeIndex();
     therdImageIndex = getRandomeIndex();
-    // console.log(firstImageIndex, secoundImageIndex, therdImageIndex);
 
     while (firstImageIndex === secoundImageIndex || firstImageIndex === therdImageIndex || secoundImageIndex === therdImageIndex) {
         firstImageIndex = getRandomeIndex();
@@ -67,64 +65,69 @@ function renderTheImg() {
         therdImageIndex = getRandomeIndex();
 
     };
-    firstImageElement.src = prodects[firstImageIndex].src
-    secoundImageElement.src = prodects[secoundImageIndex].src
-    therdImageElement.src = prodects[therdImageIndex].src
-
-    // console.log(target.id);
-    // shownImageElement.src=prodects[images].src
+    firstImageElement.src = Prodect.prodects[firstImageIndex].src
+    Prodect.prodects[firstImageIndex].shown++; 
+    secoundImageElement.src = Prodect.prodects[secoundImageIndex].src
+    Prodect.prodects[secoundImageIndex].shown++; 
+    therdImageElement.src = Prodect.prodects[therdImageIndex].src
+    Prodect.prodects[therdImageIndex].shown++; 
 
 };
 renderTheImg();
+console.log(Prodect.prodects[therdImageIndex] );
 
 
-let imgdiv = document.getElementById('images');
+
 imgdiv.addEventListener('click', userClick);
 
 function userClick(event) {
 
     userVoteCounter++;
-    // console.log(event.target.id);
 
     if (userVoteCounter < maxVote) {
         if (event.target.id === 'first-img') {
-            prodects[firstImageIndex].votes++;
+            Prodect.prodects[firstImageIndex].votes++;
+            renderTheImg();
 
         } else if (event.target.id === 'secound-img') {
-            prodects[secoundImageIndex].votes++;
+            Prodect.prodects[secoundImageIndex].votes++;
+            renderTheImg();
           
 
         } else if (event.target.id === 'therd-img') {
-            prodects[therdImageIndex].votes++;
+            Prodect.prodects[therdImageIndex].votes++;
+            renderTheImg();
             
         }else {
             alert("Please choose one of the imeges")
             userVoteCounter--;
 
         };
-        renderTheImg();
-
-    // }else if (event.target.id === 'images') {
-    //     prodects[firstImageIndex].shown++;
         
     }else {
-        let btn = document.createElement("button");
-        btn.innerHTML = "View Results";
+        
+        btn.innerHTML = "ViewResults";
         btn.onclick = function showLest() {
             let list = document.getElementById('result-lest');
 
-            for (let i = 0; i < prodects.length; i++) {
+            for (let i = 0; i < Prodect.prodects.length; i++) {
 
                 let li = document.createElement('li')
                 list.appendChild(li);
-                li.textContent = `${prodects[i].name} has ${prodects[i].votes} votes`
+                li.textContent = `${Prodect.prodects[i].name} has ${Prodect.prodects[i].votes} votes and shown ${Prodect.prodects[i].shown} times `
             };
 
+            btn.removeEventListener('click', showLest);
+
+            
         };
+       
         document.body.appendChild(btn);
         imgdiv.removeEventListener('click', userClick);
     };
 
+    
 };
+
 
 
