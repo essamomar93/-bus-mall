@@ -28,12 +28,13 @@ function Prodect(name, src) {
     this.src = src;
     this.votes = 0;
     this.shown = 0;
-    Prodect.notRebetImg.push(this);
 
+    Prodect.notRebetImg.push(this);
 
     Prodect.prodects.push(this);
 
     prodectsArr.push(this.name);
+
 };
 
 
@@ -62,6 +63,19 @@ new Prodect('water-can', 'img/water-can.jpg');
 new Prodect('wine-glass', 'img/wine-glass.jpg');
 
 // console.log(Prodect.prodects);
+
+function ubdateStoreg() {
+
+    let voteArr = JSON.stringify(prodectsVote);
+    localStorage.setItem('votes', voteArr);
+    // console.log(voteArr);
+
+    let showArr = JSON.stringify(prodectsShow);
+    localStorage.setItem('shown', showArr);
+    // console.log(showArr);
+
+
+};
 
 function getRandomeIndex() {
     return Math.floor(Math.random() * Prodect.prodects.length)
@@ -92,10 +106,11 @@ function renderTheImg() {
 
 };
 renderTheImg();
-// console.log(Prodect.prodects[therdImageIndex]);
 
 
 
+
+// console.log(ubdateStoreg);
 imgdiv.addEventListener('click', userClick);
 
 function userClick(event) {
@@ -122,11 +137,14 @@ function userClick(event) {
 
         }
 
+
     } else {
+
+
 
         btn.hidden = false;
         btn.addEventListener('click', showLest);
-        
+
         function showLest() {
             let list = document.getElementById('result-lest');
 
@@ -136,7 +154,7 @@ function userClick(event) {
                 list.appendChild(li);
                 li.textContent = `${Prodect.prodects[i].name} has ${Prodect.prodects[i].votes} votes and shown ${Prodect.prodects[i].shown} times `
             };
-        btn.removeEventListener('click', showLest);
+            btn.removeEventListener('click', showLest);
         };
 
 
@@ -145,17 +163,56 @@ function userClick(event) {
             prodectsShow.push(Prodect.prodects[i].shown);
 
 
-        }
+        };
 
         imgdiv.removeEventListener('click', userClick);
+
+        ubdateStoreg();
         showChart();
-
-    }
-
-
+    };
 };
 
-console.log(prodectsArr);
+function getProdects() {
+
+    let getVote = localStorage.getItem('votes')
+    // console.log(getVote);
+    let getshow = localStorage.getItem('shown')
+    // console.log(getshow);
+
+    let parsedArrVote = JSON.parse(getVote);
+
+    // console.log(parsedArrVote);
+
+    let parsedArrShown = JSON.parse(getshow);
+
+    // console.log(parsedArrShown);
+
+    if (parsedArrVote !== null) {
+        // for (let i = 0; i < parsedArrVote.length; i++) {
+
+        prodectsVote = parsedArrVote ;
+
+        console.log(prodectsVote);
+        // };
+    };
+
+    if (parsedArrShown !== null) {
+        // for (let i = 0; i < parsedArrShown.length; i++) {
+
+        prodectsShow = parsedArrShown ;
+
+        console.log(parsedArrVote);
+    // };
+};
+
+
+    // for (let i = 0; i < Prodect.prodects.length; i++) {
+    //     parsedArrVote.push(Prodect.prodects[i].votes);
+    //     prodectsShow.push(Prodect.prodects[i].shown);
+
+    // };
+};
+
 
 function showChart() {
 
@@ -230,3 +287,13 @@ function showChart() {
     );
 
 };
+
+
+
+function pugbombButtonHandler() {
+    let pugbombButton = document.getElementById('pugbomb');
+    pugbombButton.addEventListener('click', pugbombButtonHandler());
+    alert('PUGBOMB!!!!');
+};
+
+getProdects();
