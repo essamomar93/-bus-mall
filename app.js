@@ -10,7 +10,7 @@ let imgdiv = document.getElementById('images');
 
 let btn = document.getElementById("button");
 
-let maxVote = 10;
+let maxVote = 25;
 let userVoteCounter = 0;
 
 let firstImageIndex;
@@ -66,14 +66,8 @@ new Prodect('wine-glass', 'img/wine-glass.jpg');
 
 function ubdateStoreg() {
 
-    let voteArr = JSON.stringify(prodectsVote);
-    localStorage.setItem('votes', voteArr);
-    // console.log(voteArr);
-
-    let showArr = JSON.stringify(prodectsShow);
-    localStorage.setItem('shown', showArr);
-    // console.log(showArr);
-
+    let prodArr = JSON.stringify(Prodect.prodects);
+    localStorage.setItem('prodect', prodArr);
 
 };
 
@@ -174,126 +168,98 @@ function userClick(event) {
 
 function getProdects() {
 
-    let getVote = localStorage.getItem('votes')
-    // console.log(getVote);
-    let getshow = localStorage.getItem('shown')
-    // console.log(getshow);
+    let getVote = localStorage.getItem('prodect')
 
-    let parsedArrVote = JSON.parse(getVote);
+    let parsedArr = JSON.parse(getVote);
 
-    // console.log(parsedArrVote);
+    if (parsedArr !== null) {
 
-    let parsedArrShown = JSON.parse(getshow);
-
-    // console.log(parsedArrShown);
-
-    if (parsedArrVote !== null) {
-        // for (let i = 0; i < parsedArrVote.length; i++) {
-
-        prodectsVote = parsedArrVote ;
-
-        console.log(prodectsVote);
-        // };
+    Prodect.prodects = parsedArr;
     };
 
-    if (parsedArrShown !== null) {
-        // for (let i = 0; i < parsedArrShown.length; i++) {
-
-        prodectsShow = parsedArrShown ;
-
-        console.log(parsedArrVote);
-    // };
-};
-
-
-    // for (let i = 0; i < Prodect.prodects.length; i++) {
-    //     parsedArrVote.push(Prodect.prodects[i].votes);
-    //     prodectsShow.push(Prodect.prodects[i].shown);
-
-    // };
-};
-
-
-function showChart() {
-
-    const data = {
-        labels: prodectsArr,
-        datasets: [{
-            label: 'Votes',
-            data: prodectsVote,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-        },
-        {
-            label: 'Shown',
-            data: prodectsShow,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-        }
-
-        ]
     };
 
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+
+    function showChart() {
+
+        const data = {
+            labels: prodectsArr,
+            datasets: [{
+                label: 'Votes',
+                data: prodectsVote,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            },
+            {
+                label: 'Shown',
+                data: prodectsShow,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
             }
-        },
+
+            ]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        };
+
+
+        var myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
     };
 
 
-    var myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-    );
 
-};
+    function pugbombButtonHandler() {
+        let pugbombButton = document.getElementById('pugbomb');
+        pugbombButton.addEventListener('click', pugbombButtonHandler());
+        alert('PUGBOMB!!!!');
+    };
 
-
-
-function pugbombButtonHandler() {
-    let pugbombButton = document.getElementById('pugbomb');
-    pugbombButton.addEventListener('click', pugbombButtonHandler());
-    alert('PUGBOMB!!!!');
-};
-
-getProdects();
+    getProdects();
